@@ -1,0 +1,665 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Hash Tables</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a505329b-38d0-4cff-8cfd-9e19bb11c072" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔐</span></div><h1 class="page-title">Hash Tables</h1><table class="properties"><tbody><tr class="property-row property-row-created_time"><th>Created</th><td><time>@Mar 05, 2020 9:58 AM</time></td></tr></tbody></table></header><div class="page-body"><h1 id="36a69222-e502-40f2-baa1-3127c7554caa" class="">Hashing</h1><ul id="0b8c995f-0fe3-45cd-89c4-ba5520b4ee44" class="bulleted-list"><li>Hash table is a vector of k slots, with a hashing function</li></ul><ul id="8cc77805-8f93-448f-a190-2f78f4b25342" class="bulleted-list"><li>Hash function takes a key value (ex. student number) and calculates valid bucket index<ul id="e6a3cf1f-1a12-4234-8534-e0fb9dd724e1" class="bulleted-list"><li>we want a function that generates a unique bucket index<ul id="b4ad192c-04b5-4fb1-898d-f15a38549d7a" class="bulleted-list"><li>key → int between [0, k-1]</li></ul></li></ul><ul id="ebf2cf14-2e6d-40e1-ad5c-2de6286ca627" class="bulleted-list"><li>we lose <strong>locality</strong> for things like sorting</li></ul></li></ul><ul id="82b03b7e-89c9-428f-879e-bb576dfa68b3" class="bulleted-list"><li>According to the Birthday Problem, collisions will be common</li></ul><ul id="726eb862-4d18-4079-9b6c-d00003365873" class="bulleted-list"><li><code>closed hashing</code> uses <code>linear probing</code> to find another bucket in the table<ul id="47296e6d-c1f6-4e8f-ae33-fbf6dd2ad903" class="bulleted-list"><li>aka &quot;open addressing&quot;</li></ul><ul id="5798d9c8-f2d9-4e9d-96f4-93fe9e884d16" class="bulleted-list"><li>table is vector of K struct elements<ul id="d6bffc74-ef44-4d6b-ab11-73df451dfd20" class="bulleted-list"><li>allocated all at one time</li></ul><ul id="4f8e561e-fa14-4ed2-90c4-a8a8afe03372" class="bulleted-list"><li>never use <code>push_back</code> , basically using as fixed-size array</li></ul></li></ul><ul id="55d18297-ae73-4787-ad2a-bf142c400467" class="bulleted-list"><li>if collision, keeps adding 1 to index until an empty/zombie slot is found<ul id="408a5240-e18f-4d53-8991-9645a1512481" class="bulleted-list"><li>this is known as <code>linear probing</code></li></ul><ul id="703d6610-d384-4768-9014-d3f15953c7b0" class="bulleted-list"><li>inserts take longer with more elements</li></ul></li></ul><ul id="0772f8f8-caa8-498c-822f-76f0aaf70894" class="bulleted-list"><li>deletion means marking bucket as zombie<ul id="236c9dd8-a65a-4ee8-aa6f-903a4dfc6e8b" class="bulleted-list"><li>zombie bucket is kept, but marked as undead</li></ul><ul id="7f016f93-433c-4f23-ac9d-e18c893479fd" class="bulleted-list"><li>helps with navigation?</li></ul></li></ul><ul id="0ea0c8ce-3328-40b9-8f93-1a5091f60bfe" class="bulleted-list"><li>what happens when you filled the table?<ul id="2eccc036-74d6-4626-8cd9-adb2796d536b" class="bulleted-list"><li>create table with double the size, start at front, and re-hash</li></ul><ul id="2649561b-8866-4d88-9017-24ade55743d2" class="bulleted-list"><li>hash function works <code>mod k</code></li></ul><ul id="4126e6e7-fc7e-4b01-8e5a-9ee2bd7f0b7c" class="bulleted-list"><li>once the table is successfully set-up, no risk for <code>malloc</code> fail</li></ul></li></ul></li></ul><pre id="961735c5-e68a-4de4-be01-e5b9f7af5376" class="code"><code>enum Status {EMPTY, ACTIVE, ZOMBIE};
+const int NOT_FOUND = -1;
+
+struct Node {
+	int snum; // stu num
+	string name;
+	Status status;
+}
+
+typedev vector&lt;Node&gt; HashTable;
+
+int numActiveElements;
+
+void initHT (HashTable&amp; table, int K) {
+	table.resize(K);
+	numActiveElements = 0;
+	for (int i = 0; i &lt; K; i++) {
+		table[i].status = EMPTY; // ZOMBIE
+	}
+}
+
+int myhash (int key, int numBuckets) {
+	return key % numBuckets;
+}
+
+void insertHT (HashTable&amp; table, string name, int snum) {
+	const int numBuckets = table.size();
+	int slot = myhash(snum, numBuckets);
+	while (ZOMBIE != table[slot] &amp;&amp; EMPTY != table[slot].status) {
+		slot = (slot + 1) % numBuckets;
+	}
+
+	table[slot].snum = snum;
+	table[slot].name = name;
+	table[slot].status = ACTIVE;
+	numActiveElements++;
+}
+
+int lookupIndexHT(const HashTable&amp; table, int snum) {
+
+	const int numBuckets = table.size();
+	int slot  = myhash(snum, numBuckets);
+	for(int i = 0; i &lt; numBuckets; i++) {
+		if (EMPTY == table[slot].status){
+			return NOT_FOUND;
+		} else if (ACTIVE == table[slot].status &amp;&amp; snum == table[slot].snum {
+			return slot
+		}
+
+		slot = (slot + 1) % numBuckets;
+	}
+
+	return NOT_FOUND;
+}
+
+bool hasHT(const HashTable&amp; table, int snum) {
+	returN
+
+string lookupHT( const HAshTable7) {
+
+void removeHT(HashTable) {
+	const int index = lookupIndexHT(table, snum);
+	if (index != -1) {
+		table[index].status = ZOMBIE;
+		numActiveElements--;
+	}
+}
+
+void printHT (const HashTable&amp; table) {
+	for(int i = 0; i &lt; (int) table.size(); i++) {
+		if (ACTIVE == table[i].status
+
+}</code></pre><p id="70fc62d0-7a78-4f30-a987-9b1578d173b4" class="">
+</p><ul id="2dcc6527-25ee-4a04-b534-4ee7bdc30293" class="bulleted-list"><li><code>open hashing</code> is when each bucket is a pointer to a short linked list / BST of records<ul id="0affca48-ac2d-41f3-b025-37edaa661748" class="bulleted-list"><li>Best case: no collisions, O(1) lookup</li></ul><ul id="a0c867af-7828-4c83-a55e-948753b89919" class="bulleted-list"><li>Worse case: all inputs map to same bucket, O(n) lookup</li></ul><ul id="70e2cb6b-fde1-4d6c-b96d-5df33e8b6a7a" class="bulleted-list"><li>A perfect hash function will result in no collisions</li></ul><ul id="50939fb3-1d69-4060-91f9-efc4da7ab640" class="bulleted-list"><li>Hidden structure in the input data leads to lumpy collision sets</li></ul></li></ul><pre id="87ba464f-6353-4459-bb6d-1faec3e295c2" class="code"><code>struct Node {
+	int snum;
+	sting name;
+	NOde* next;
+};
+
+typedef vec
+
+void initHT(HashTable*
+	resize(K)
+}
+
+int myhash( )
+//
+}
+
+void nukeHT(HAas)
+
+void insertHT()
+	const int slot = myhash(snum, table.size());
+	Node* newNode = ew Node;
+	newNode-&gt;name = name;
+	newNode-&gt;snum = snum;
+	newNode-&gt;net = tablep[]slot
+</code></pre><p id="aa6349c7-ac53-4d5a-9e73-b5bfa675ebed" class="">
+</p><h2 id="4fedee10-d32d-4778-be2e-3158f595a513" class="">The Hash Function</h2><h3 id="a26780e9-4f3a-46c3-965f-f05ce140125d" class="">Characteristics of a good hash function</h3><ul id="28728b26-b56e-433c-8072-126728425049" class="bulleted-list"><li>Deterministic, based on key value<ul id="703b879f-787c-48d4-9ede-0d1ef9c86801" class="bulleted-list"><li>consistent value → hash mapping<ul id="05831592-68d5-4aae-84ee-bc0d34c2ca37" class="bulleted-list"><li>must always give the same answer for same input</li></ul></li></ul></li></ul><ul id="18df156f-3b49-43ed-881f-b0f42fbe87ac" class="bulleted-list"><li>Good, even spread of results over buckets<ul id="32837ff6-b655-4764-941d-fd6f3c8b5136" class="bulleted-list"><li>known as <strong>uniformity</strong></li></ul></li></ul><ul id="b6ae4066-ef58-423d-b96f-2d0958804149" class="bulleted-list"><li>Cheap to compute (should be O(1))</li></ul><ul id="e0440be1-d261-4c3b-9978-a4e268ca8c47" class="bulleted-list"><li>Supports a variable range<ul id="029442ac-14a9-42af-b4e1-fc7b6dedb427" class="bulleted-list"><li>easy to adapt if # of buckets change</li></ul></li></ul><ul id="9a99d203-a87b-43c7-a2d4-d9b929fbe28f" class="bulleted-list"><li>Hashing does not require that elements have unique keys<ul id="ff94b969-167c-4950-86bf-ee9cb96ff035" class="bulleted-list"><li>each distinct key value maps to same bucket</li></ul></li></ul><ul id="06c9dc03-d1ba-4501-b4af-d03bf9de36ca" class="bulleted-list"><li>does not work well if you want to find all elements in a range</li></ul><p id="0775793e-e6e6-49b9-a469-0e8fe2c55006" class="">
+</p><h3 id="a9ab2790-1103-4448-b895-6db1f73e759f" class="">Common (and bad) hash function</h3><p id="1a9097c5-8a92-49c1-84a7-c28aa477e7d9" class="">Sum ASCII values of the characters, then mod by K</p><ul id="1eba12bd-8fa5-4f72-b5ea-4e0f255c8f82" class="bulleted-list"><li>bad because you need huge number of buckets for sparse distribution</li></ul><ul id="9d46494e-8b29-416e-984e-a1c52830b23d" class="bulleted-list"><li>1k buckets: 0% empty, avg=210, med=177, max=619</li></ul><ul id="17becbde-16b4-4625-9adb-fc2851cb61cc" class="bulleted-list"><li>10K buckets: 80% empty, avg=21, med=0, max=610<ul id="bb667366-2a21-482a-b665-28a4a69b4b79" class="bulleted-list"><li>shortest word: &quot;a&quot;, ASCII sum 97</li></ul><ul id="fdd5c26e-09bd-4f8c-994f-3e340cd412db" class="bulleted-list"><li>No hash num less than 97 or more than 2621<ul id="e99fcf6d-6d7b-42f8-aba0-711148d20b93" class="bulleted-list"><li>very sparse</li></ul></li></ul></li></ul><ul id="387e47ad-7b2d-4bef-8437-b7d4df5dbc94" class="bulleted-list"><li>100K buckets, 98% empty<ul id="9ec9d204-6188-45ea-a441-0155980f14a7" class="bulleted-list"><li>lots of unused space</li></ul></li></ul><p id="473836e1-e858-4608-a05c-8ff65e82ab3e" class="">
+</p><h2 id="03242e55-74aa-4845-bfba-e61280f61009" class="">Applications</h2><ul id="665d4e67-50c9-4d33-83db-53bab04873d2" class="bulleted-list"><li>can use hash function to detect duplicates</li></ul><ul id="fc8a6555-9234-4b45-9053-d1b623a8e26e" class="bulleted-list"><li>useful for comparing &quot;big things&quot; to others<ul id="f6b67f18-2d4c-486c-b4db-58a77327a802" class="bulleted-list"><li>convert each big thing to something smaller using hash function, then compare smaller</li></ul><ul id="49e2451a-e254-4fe9-9a8f-1db47beddb39" class="bulleted-list"><li>conversion is lossy</li></ul></li></ul><ul id="eae5b5b3-dcf7-43e3-8312-199bc379aaed" class="bulleted-list"><li>hashing is often used for error correction<ul id="7bcf32a2-ba1f-4336-a4ec-b31e79053c45" class="bulleted-list"><li>suppose downloading text file over noisy line</li></ul><ul id="9ab6c973-6a10-4c15-9cf1-de2a391af0ac" class="bulleted-list"><li>compute string hash of file at source and destination, then compare hashes<ul id="c5bd7994-97ea-4c8e-946c-ce044f3bfdf9" class="bulleted-list"><li>if they match, transfer was OK</li></ul><ul id="facfcecb-b5cf-4009-80cb-1828df458906" class="bulleted-list"><li>if they don&#x27;t data was lost</li></ul></li></ul><ul id="87bdbaa9-8c14-488a-9543-ab2102043c11" class="bulleted-list"><li>MD5 hash values are 32-bit int</li></ul></li></ul><ul id="2106df2d-d7e8-42e4-a911-b525c94f4b66" class="bulleted-list"><li>plagiarism detection is a problem<ul id="56d5c5a8-ee15-40e7-a633-877ce9a3c339" class="bulleted-list"><li>take hash of each function (or each line after some normalization)<ul id="08363682-5939-40dd-a602-b7167dd60d02" class="bulleted-list"><li>when two functions have same hash value, do detailed comparison</li></ul></li></ul><ul id="e00086f6-360c-4c45-b236-4dd3fb5d0240" class="bulleted-list"><li>rename all variables to the same thing</li></ul><ul id="e2d7e4dd-1663-499e-8dfd-4d796592b143" class="bulleted-list"><li>remove all constant values (strings, numbers, etc) to the same thing</li></ul><ul id="6f10e461-1c05-4b13-8753-98d2222a1a55" class="bulleted-list"><li>compute hash value for each line of code, store in a set (not a sequence)<ul id="d17fd6e6-9721-466c-8b0e-02c058314fc8" class="bulleted-list"><li>order doesn&#x27;t matter</li></ul></li></ul><ul id="8aa4d31e-4daf-4f0e-940d-c97cf31c0611" class="bulleted-list"><li>compare each function of each student against every other one seeing if there is overlap of hash values<ul id="411d5ff6-e386-45ac-897d-3c94a418d26a" class="bulleted-list"><li>adding useless code doesn&#x27;t help you</li></ul></li></ul></li></ul><ul id="b2952969-689a-42ea-990a-e7af2b37def4" class="bulleted-list"><li>spell checking can be done by hashing a dictionary</li></ul><ul id="93e7f5c1-311f-40a6-87a4-0ecea9e4c658" class="bulleted-list"><li>password validation<ul id="92945e53-8720-44d9-80e4-bc9368cde68c" class="bulleted-list"><li>before, password stored in readable plain text file /etc/passwd</li></ul></li></ul><ul id="08d2e7ca-52d2-4a3a-91e5-496e0fb91045" class="bulleted-list"><li>cryptographic hash function<ul id="cc6ad9e4-38fe-430e-a7bc-185865f65be5" class="bulleted-list"><li>infeasible to go from hash to message</li></ul><ul id="12757d56-3954-46c6-a741-4a5d221a12cb" class="bulleted-list"><li>infeasible to modify message without changing hash</li></ul><ul id="c15252ce-15ff-47a6-9f74-0a4f20eb0eeb" class="bulleted-list"><li>infeasible to find two messages with same hash</li></ul><ul id="d5ecfecd-21f4-4b90-b9c9-ea0adb3e60a8" class="bulleted-list"><li>MD5, SHA0, SHA1 are examples of cryptographic hash functions that were broken/insecure<ul id="b70fd5ac-ea8e-4785-b7bb-f744f6e55d5b" class="bulleted-list"><li>SHA2 is OK 👍  </li></ul></li></ul></li></ul></div></article></body></html>

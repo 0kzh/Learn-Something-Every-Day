@@ -1,0 +1,597 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Maps</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	opacity: 0.5;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif; }
+.mono { font-family: Nitti, 'Microsoft YaHei', '微软雅黑', monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, KaiTi, STKaiTi, '华文楷体', KaiTi_GB2312, '楷体_GB2312', serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, Nitti, 'Microsoft YaHei', '微软雅黑', monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b5323cf0-ba48-49fc-b9ca-3c38bc05ed80" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🗺</span></div><h1 class="page-title">Maps</h1><table class="properties"><tbody><tr class="property-row property-row-created_time"><th>Created</th><td><time>@Mar 03, 2020 10:51 AM</time></td></tr></tbody></table></header><div class="page-body"><h2 id="5e1b045c-2fc1-45b2-8469-c9d271e3ab05" class="">Sequence ADT</h2><ul id="ba09f5dd-1ce7-4210-b37a-655e6dc474ad" class="bulleted-list"><li>container of elements, indexed by set of contiguous non-negative integers<ul id="ff4ca119-3366-400a-8e07-ef896d47059f" class="bulleted-list"><li>similar idea as vector</li></ul><ul id="bfa2d604-e0c6-4372-838a-a6d9eb328e5f" class="bulleted-list"><li>vectors usually have expectation of being implemented with a dynamic array</li></ul></li></ul><ul id="05624978-9638-4203-8a05-7b9a3e909100" class="bulleted-list"><li>insert<ul id="2b34a6e4-ad46-4c9f-9466-435423af76f3" class="bulleted-list"><li>inserts into specified position and shift elements to the right, increase container size by 1</li></ul></li></ul><ul id="275e4213-5718-4360-a672-ac4d7a87a1af" class="bulleted-list"><li>append<ul id="1f8bcb00-a592-4399-8e9d-3fd10eee2196" class="bulleted-list"><li>similar to <code>push_back</code></li></ul></li></ul><ul id="b3debcf9-c609-4e99-8440-732127902785" class="bulleted-list"><li>at</li></ul><ul id="551bedef-f461-47ac-b60b-4f19f8091fc4" class="bulleted-list"><li>remove<ul id="b9c5ca5e-13e1-4280-9d1d-9efb3f7c72ae" class="bulleted-list"><li>removes at specified position, moving all elements one to the left, decreasing size by 1</li></ul></li></ul><div id="1674374e-478e-40a4-b394-d2406f5e67c5" class="collection-content"><h4 class="collection-title">Implementation complexity</h4><table class="collection-content"><thead><tr><th>Name</th><th>insert</th><th>append</th><th>at</th><th>remove</th></tr></thead><tbody><tr id="8f17b2de-c035-4777-8324-48aaf2a8a2b6"><td class="cell-title"><a href="https://www.notion.so/Array-8f17b2dec0354777832448aaf2a8a2b6">Array</a></td><td class="cell-[NC2">O(n)</td><td class="cell-oEo,">O(1)</td><td class="cell-Hkgp">O(1)</td><td class="cell-A[!C">O(n)</td></tr><tr id="e3dbb099-183b-4255-bd9d-ac515af4c148"><td class="cell-title"><a href="https://www.notion.so/C-style-vector-e3dbb099183b4255bd9dac515af4c148">C++ style vector</a></td><td class="cell-[NC2">O(n)</td><td class="cell-oEo,">O(1)*</td><td class="cell-Hkgp">O(1)</td><td class="cell-A[!C">O(n)</td></tr><tr id="4d546050-c75f-442b-bb4e-0baccf44a03f"><td class="cell-title"><a href="https://www.notion.so/LinkedList-4d546050c75f442bbb4e0baccf44a03f">LinkedList</a></td><td class="cell-[NC2">O(n)</td><td class="cell-oEo,">O(1)</td><td class="cell-Hkgp">O(n)</td><td class="cell-A[!C">O(n)</td></tr></tbody></table></div><ul id="112161c6-08d4-4b66-8f85-d794bdc7899c" class="bulleted-list"><li>insert for vector is O(1) to find and O(n) to insert; LL is O(n) to find and O(1) to insert </li></ul><ul id="e35e2eea-742b-4d88-9fe2-bf2f7253c301" class="bulleted-list"><li>* = amortized runtime</li></ul><h2 id="a653c3d2-5f79-45b7-a647-73082e4ad680" class="">Dictionary</h2><ul id="8963b6f7-5698-4299-82d1-96168403938c" class="bulleted-list"><li>collection of ordered pairs of the form (key, value)</li></ul><ul id="9674f19b-8cff-4fd0-b42a-1297b171d639" class="bulleted-list"><li>Simple lookup table<ul id="65ed9d35-fa2c-45a6-bf88-0ea3602bac88" class="bulleted-list"><li>adding (key, value) means that dict[key] should return value afterward</li></ul></li></ul><ul id="444e5462-c85d-4c05-bdf9-236879ef1f49" class="bulleted-list"><li>also called a <code>map</code>, or <code>associative array</code></li></ul><ul id="702d38ba-04a1-4665-a659-4e938cc27137" class="bulleted-list"><li>add<ul id="bfe9d515-ee30-400d-92c7-318141072b5b" class="bulleted-list"><li>inserts pair to dictionary</li></ul></li></ul><ul id="18c158f5-13ef-4657-ae56-73b882069366" class="bulleted-list"><li>overwrite <ul id="56aeb983-f34a-438c-8ad8-c18e79481011" class="bulleted-list"><li>takes key and value, overwrites existing value</li></ul></li></ul><ul id="25593832-5a63-476e-85b5-0045aafafed9" class="bulleted-list"><li>lookup takes key and returns associates value from dict<ul id="65c82414-0fd0-47e9-b4db-50859a045d63" class="bulleted-list"><li>short form <code>dict[key] == lookup(dict, key)</code></li></ul></li></ul><ul id="e67ee13b-27df-45a8-bacc-cbeadbbb8e79" class="bulleted-list"><li>remove</li></ul><ul id="12d9fb01-5265-4fc3-b93c-fbb900f56a1a" class="bulleted-list"><li>print<ul id="4e3006eb-3b7c-4022-9bec-2bdc55cf2aeb" class="bulleted-list"><li>assumed to not be sorted by default</li></ul></li></ul><ul id="95309850-2b0e-4331-8cbc-915c07668a13" class="bulleted-list"><li>implementation</li></ul><p id="e5b4ce7b-19c0-498c-8a23-5eba9f6128a8" class="">
+</p><div id="cbe9a99f-dfb3-4822-a2a3-78f55d0e2a63" class="collection-content"><h4 class="collection-title">Implementation of Dictionary</h4><table class="collection-content"><thead><tr><th>Name</th><th>add</th><th>overwrite</th><th>lookup</th><th>remove</th></tr></thead><tbody><tr id="60972e88-a3dc-4ed7-8f9f-51ac34abc460"><td class="cell-title"><a href="https://www.notion.so/Sorted-Vector-60972e88a3dc4ed78f9f51ac34abc460">Sorted Vector</a></td><td class="cell-[NC2">O(log n + n)</td><td class="cell-oEo,">O(log n)</td><td class="cell-Hkgp">O(log N)</td><td class="cell-A[!C">O(log n + n)</td></tr><tr id="025f66d4-b180-42e1-8cd7-9d3bfae0e399"><td class="cell-title"><a href="https://www.notion.so/Unsorted-Vector-025f66d4b18042e18cd79d3bfae0e399">Unsorted Vector</a></td><td class="cell-[NC2">O(1)</td><td class="cell-oEo,">O(n)</td><td class="cell-Hkgp">O(n)</td><td class="cell-A[!C">O(n)</td></tr><tr id="7306ef58-4a56-4eaf-84d8-fb942a4df690"><td class="cell-title"><a href="https://www.notion.so/Sorted-Linked-List-7306ef584a564eaf84d8fb942a4df690">Sorted Linked List</a></td><td class="cell-[NC2">O(n + 1)</td><td class="cell-oEo,">O(n + 1)</td><td class="cell-Hkgp">O(n)</td><td class="cell-A[!C">O(n)</td></tr><tr id="5d941c5f-0c78-4cc2-aac7-98d1ae77a964"><td class="cell-title"><a href="https://www.notion.so/Unsorted-Linked-List-5d941c5f0c784cc2aac798d1ae77a964">Unsorted Linked List</a></td><td class="cell-[NC2">O(1)</td><td class="cell-oEo,">O(n +1)</td><td class="cell-Hkgp">O(n)</td><td class="cell-A[!C">O(n)</td></tr><tr id="83b649d7-a8c8-43dd-a733-20fbfe0d6cad"><td class="cell-title"><a href="https://www.notion.so/Vanilla-BST-83b649d7a8c843dda73320fbfe0d6cad">Vanilla BST</a></td><td class="cell-[NC2">O(log N)</td><td class="cell-oEo,">O(log N)</td><td class="cell-Hkgp">O(log N)</td><td class="cell-A[!C">O(log N)</td></tr></tbody></table></div><h2 id="e1c2daee-fbc6-4789-a6b1-6ccfcd3428f1" class="">C++ map datatype</h2><p id="65601132-e8e0-4b6f-a59b-fa8f85dbec2f" class=""><code>map</code> is an ordered (sorted) container, as are the related structures <code>multimap</code>, <code>set</code>, and <code>multiset</code></p><ul id="712085d7-8113-413a-b669-f6d88da411d1" class="bulleted-list"><li>iterating through map, get output in sorted order</li></ul><ul id="eff40103-ae9d-4500-bc44-5339cd96d4c5" class="bulleted-list"><li><code>map&lt;T1, T2&gt; m;</code> <ul id="8536e4c3-611f-4610-97f7-1920cd6b2ba2" class="bulleted-list"><li>T1 must support <code>&lt;</code> operator, <code>strict weak ordering</code></li></ul><ul id="7dbe9111-239a-4806-8f9b-f3fd4e0ab3ed" class="bulleted-list"><li>anti-reflexive: doesn&#x27;t go both ways<ul id="61c5278d-828d-4c01-af1e-39f8aafe94c1" class="bulleted-list"><li>x is not less than itself</li></ul></li></ul><ul id="370e5db9-052a-4dda-9dd4-b23ba481a8ee" class="bulleted-list"><li>anti-symmetric:<ul id="525106f0-7e4a-4869-b5b5-0114b9959bb7" class="bulleted-list"><li>if a &lt; y, y !&lt; a</li></ul></li></ul><ul id="af735536-ebf4-44e3-9825-c4694e304173" class="bulleted-list"><li>transitive:<ul id="fefc1478-9dda-48a8-9682-4d90323c572a" class="bulleted-list"><li>if a &lt; b, b &lt; c, a &lt; c</li></ul></li></ul></li></ul><p id="f470a1ef-a5ab-4fcd-bcd6-17f8a08d23a6" class="">
+</p><pre id="918c9fc7-e84c-44d8-afb0-14b7f2a04957" class="code"><code>for(map&lt;string, int&gt;::const_iterator i = m.begin(); i != m.end(); i++) {
+	cout &lt;&lt; (*i).first &lt;&lt; &quot; &quot; &lt;&lt; (*i).second &lt;&lt; endl;
+}
+
+for (auto const&amp; x : m) {
+	cout &lt;&lt; x.first &lt;&lt; &quot; &quot; &lt;&lt; x.second &lt;&lt; endl;
+}</code></pre><p id="ed412815-f315-4d84-ba19-ac3c9c75552c" class="">
+</p><p id="7cad0385-2550-4d85-91b6-8a7dd92be993" class="">Counting the number of words in an article</p><pre id="1952dc15-d874-41fb-a5ed-bc07274c5b85" class="code"><code>string trim (string s) {
+	string ans = &quot;&quot;;
+	for (int i = 0; i &lt; s.length(); i++) {
+		const char c = s.at(i);
+		if (isalpha(c)) {
+			ans += tolower(c);
+		}
+	}
+	return ans;
+}
+
+int main() {
+	map&lt;string,int&gt; m;
+	
+	string token;
+	while (cin &gt;&gt; token) {
+		m[trim(token)]++;
+	}
+
+	for (auto const&amp; c : m) {
+		cout &lt;&lt; c.first &lt;&lt; &quot; &quot; &lt;&lt; c.second &lt;&lt; endl;
+  }
+</code></pre><p id="d53e88ef-6a35-452a-ab8e-7f2e17de1821" class="">
+</p><p id="b33158d6-fe13-484b-83b0-c283ff27ef70" class="">We can extend this further by trying to find the similarity between two maps</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="57f277f1-fbb1-44d5-a410-0a9a437295c3"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Can find how similar two articles are by counting each word, then multiplying the counts of each word and taking the sums</div></figure><ul id="8b940ee4-8b39-48cc-abb0-e9182f9f03cf" class="bulleted-list"><li>known as cosine similarity<ul id="fffb93db-189c-420a-b0e0-600b3ed41d12" class="bulleted-list"><li>called this bc it&#x27;s like taking dot product (conceptually and procedurally)</li></ul></li></ul></div></article></body></html>
